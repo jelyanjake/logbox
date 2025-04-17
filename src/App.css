@@ -263,7 +263,7 @@ nav {
 
 .registration-form {
   max-width: 500px;
-  margin: 0.5rem auto;
+  margin: auto auto;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -280,14 +280,6 @@ nav {
   margin: 2rem auto;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.registration-form h2 {
-  font-size: 2rem;
-  color: var(--primary);
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
 }
 
 .form-group {

@@ -18,7 +18,7 @@ function RegPage() {
               <input type="tel" id="phone" name="phone" required />
             </div>
             <div className="form-group">
-              <label htmlFor="idnum">Student ID Number:</label>
+              <label htmlFor="idnum">School ID Number:</label>
               <input type="text" id="idnum" name="idnum" required />
             </div>
             <button type="submit" className="register-btn" onClick={temp}>Register</button>

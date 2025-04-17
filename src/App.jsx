@@ -56,7 +56,7 @@ function App() {
       <header className="header">
         <div className="container">
           <nav>
-            <a href="#" className="logo">&#128223; Exhibit Registration System</a>
+            <a href="#" className="logo">&#128223; temporary logo idk</a>
             <ul className="nav-links">
               <li><MenuPopup /></li>
             </ul>

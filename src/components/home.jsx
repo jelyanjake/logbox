@@ -9,7 +9,7 @@ function HomePage() {
         <div className="section-title">
           <form className="time-form">
             <div className="form-group">
-              <label htmlFor="idnum">Student ID Number:</label>
+              <label htmlFor="idnum">School ID Number:</label>
               <input type="text" id="idnum" name="idnum" required />
             </div>
             <button type="submit" className="time-btn" onClick={temp}>Time in/out</button>
