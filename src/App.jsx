@@ -1,7 +1,17 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import usersIcon from './assets/users.png';
+import MenuPopup from './components/menupopup';
+import HomePage from './components/home';
+import RegPage from './components/reg';
+import UsersPage from './components/logs';
+
+
 function App() {
+  
+  const location = useLocation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,9 +33,23 @@ function App() {
     };
 
     fetchData();
+
   }, []);
 
   if (error) return <div className="error">Error: {error.message}</div>;
+
+  const pageVariants = {
+    initial: { y: 30, opacity: 0 },
+    in: { y: 0, opacity: 1 },
+    out: { y: -30, opacity: 0 }
+  };
+  
+  const pageTransition = {
+    type: "spring",
+    mass: 0.5,
+    damping: 15,
+    stiffness: 100
+  };
 
   return (
     <div className="app">
@@ -34,35 +58,50 @@ function App() {
           <nav>
             <a href="#" className="logo">&#128223; Exhibit Registration System</a>
             <ul className="nav-links">
-              <li><a href="#"><img src={usersIcon}></img></a></li>
+              <li><MenuPopup /></li>
             </ul>
           </nav>
         </div>
       </header>
 
       <main className="main-content">
-        <section id="features">
-          <div className="container">
-            <div className="section-title">
-              <form className="registration-form">
-                <div className="form-group">
-                  <label htmlFor="name">Name:</label>
-                  <input type="text" id="name" name="name" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number:</label>
-                  <input type="tel" id="phone" name="phone" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="idnum">Student ID Number:</label>
-                  <input type="text" id="idnum" name="idnum" required />
-                </div>
-                <button type="submit" className="register-btn">Register</button>
-                <button type="button" className="cancel-btn">Cancel</button>
-              </form>
-            </div>
-          </div>
-        </section>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <HomePage />
+              </motion.div>
+            } />
+            <Route path="/register" element={
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <RegPage />
+              </motion.div>
+            } />
+            <Route path="/users" element={
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <UsersPage />
+              </motion.div>
+            } />
+          </Routes>
+        </AnimatePresence>
       </main>
 
       <footer className="footer">

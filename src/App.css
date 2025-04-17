@@ -84,11 +84,14 @@ nav {
   margin-right: 20px;
 }
 
-.nav-links a img {
+.nav-links img {
   width: 25px;
   height: 25px;
-  margin-right: 45px;
-  vertical-align: middle;
+}
+
+.nav-links button {
+  padding: 1px 5px;
+  background-color: var(--light);
 }
 
 .nav-links a:hover {
@@ -260,6 +263,20 @@ nav {
 
 .registration-form {
   max-width: 500px;
+  margin: 0.5rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.userlog {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.time-form {
+  max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -331,4 +348,56 @@ button[type="submit"]:hover {
 
 .register-btn {
   width: 80%;
+}
+
+.time-btn {
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* MenuPopup.css */
+.menu-container {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+}
+
+.popup ul {
+  margin: 0;   /* Critical reset */
+  padding: 0;  /* Critical reset */
+}
+
+.popup li {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  margin: 0;   /* Critical reset */
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.popup li:last-child {
+  border-bottom: none;
+}
+
+.popup li:hover {
+  background: #f8fafc;
+}
+
+.menu-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
 }
