@@ -12,31 +12,6 @@ import UsersPage from './components/logs';
 function App() {
   
   const location = useLocation();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/burgers');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
-  }, []);
-
-  if (error) return <div className="error">Error: {error.message}</div>;
 
   const pageVariants = {
     initial: { y: 30, opacity: 0 },
