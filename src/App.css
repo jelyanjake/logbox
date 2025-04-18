@@ -8,7 +8,7 @@
 :root {
   --primary: #4081e2;
   --secondary: #ffffff;
-  --dark: #ffffff;
+  --dark: #212529;
   --light: #ffffff;
   --success: #28a745;
 }
@@ -21,7 +21,8 @@ html {
 body {
   width: 100%;
   line-height: 1.6;
-  color: var(--dark);
+  background-color: #ffffff;
+  color: #212529;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -63,7 +64,7 @@ nav {
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--dark);
+  color: #212529;
   text-decoration: none;
 }
 
@@ -74,6 +75,7 @@ nav {
 
 .nav-links li {
   margin-left: 30px;
+  color:#212529;
 }
 
 .nav-links a {
@@ -393,4 +395,5 @@ button[type="submit"]:hover {
   width: 16px;
   height: 16px;
   margin-right: 10px;
+}10px;
 }
