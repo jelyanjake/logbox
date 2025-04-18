@@ -78,6 +78,7 @@ function RegPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                autoFocus
                 required
               />
             </div>

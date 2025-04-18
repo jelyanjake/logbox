@@ -18,7 +18,7 @@ function UsersPage() {
                 </div>
                 <div class="div3">
                 <p>5</p>
-                <p>Timed Out</p>
+                <p>Inactive</p>
                 </div>
                 <div class="div4">
                 <p>Search Bar</p>

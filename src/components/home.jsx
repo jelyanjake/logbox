@@ -4,24 +4,74 @@ import StatusModal from './StatusModal';
 function HomePage() {
   const [status, setStatus] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
-  const [idNum, setIdNum] = useState(''); // Add state for the input value
+  const [idNum, setIdNum] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
-    setStatusMessage('Validating...');
-    
-    setTimeout(() => {
-    setStatus('success');
-    setStatusMessage('Successfully Scanned!');
-    setIdNum('');
-    }, 1500);
+    setStatusMessage('Processing...');
 
-    setTimeout(() => {
-      setStatus(null);
+    try {
+      // 1. Find user by ID
+      const findResponse = await fetch(
+        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?idnum=${idNum}`
+      );
+      const users = await findResponse.json();
+
+      if (!users.length) throw new Error('Student ID not found');
+      const user = users[0];
+      const currentTime = new Date().toISOString();
+      const isTimeIn = !user.isActive; // Determine action based on isActive
+
+      // 2. Prepare updated data
+      const updatedData = {
+        ...user,
+        lastAction: currentTime, // Always update lastAction
+        isActive: isTimeIn, // Toggle active status
+        logs: user.logs || [] // Initialize logs array if undefined
+      };
+
+      // 3. Add to logs if timing out
+      if (!isTimeIn) {
+        updatedData.logs = [
+          ...updatedData.logs,
+          {
+            timein: user.timein,
+            timeout: currentTime,
+            date: currentTime.split('T')[0] // Store just the date
+          }
+        ];
+        updatedData.timein = null; // Reset timein
+        updatedData.timeout = null; // Reset timeout
+      } else {
+        updatedData.timein = currentTime; // Set timein
+      }
+
+      // 4. Update user record
+      const updateResponse = await fetch(
+        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users/${user.id}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedData)
+        }
+      );
+
+      if (!updateResponse.ok) throw new Error('Update failed');
+
+      // 5. Clear input and show success
       setIdNum('');
-    }, 2500);
-  }
+      setStatus('success');
+      setStatusMessage(
+        isTimeIn 
+          ? `Time in recorded at ${new Date(currentTime).toLocaleTimeString()}`
+          : `Time out recorded. Session logged.`
+      );
+    } catch (err) {
+      setStatus('error');
+      setStatusMessage(err.message);
+    }
+  };
 
   return (
     <section id="features">
@@ -34,14 +84,20 @@ function HomePage() {
                 type="text" 
                 id="idnum" 
                 name="idnum" 
-                value={idNum} // Controlled input
-                onChange={(e) => setIdNum(e.target.value)} // Update state on change
+                value={idNum}
+                onChange={(e) => setIdNum(e.target.value)}
                 autoFocus 
                 autoComplete="off" 
                 required 
               />
             </div>
-            <button type="submit" className="time-btn">Time in/out</button>
+            <button 
+              type="submit" 
+              className="time-btn"
+              disabled={status === 'loading'}
+            >
+              {status === 'loading' ? 'Processing...' : 'Time in/out'}
+            </button>
           </form>
         </div>
       </div>
