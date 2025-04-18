@@ -297,6 +297,10 @@ nav {
   text-align: left;
 }
 
+.form-group input[type="text"],input[type="tel"] {
+  background-color: #ffffff;
+}
+
 .form-group input {
   width: 100%;
   padding: 0.75rem;
