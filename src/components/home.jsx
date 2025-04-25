@@ -14,12 +14,14 @@ function HomePage() {
     try {
       // 1. Find user by ID
       const findResponse = await fetch(
-        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?idnum=${idNum}`
+        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users`
       );
       const users = await findResponse.json();
+  
+      // 2. Find EXACT match (not partial)
+      const user = users.find(u => u.idnum === idNum); // Changed to exact comparison
 
-      if (!users.length) throw new Error('Student ID not found');
-      const user = users[0];
+      if (!user) throw new Error('Student ID not found');
       const currentTime = new Date().toISOString();
       const isTimeIn = !user.isActive; // Determine action based on isActive
 
