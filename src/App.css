@@ -303,6 +303,7 @@ nav {
 
 .form-group input[type="text"],input[type="tel"] {
   background-color: #ffffff;
+  color: #212529;
 }
 
 .form-group input {

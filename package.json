@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "android-sms-gateway": "^2.0.0",
+    "axios": "^1.9.0",
     "cors": "^2.8.5",
     "framer-motion": "^12.7.4",
     "react": "^19.0.0",
