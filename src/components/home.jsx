@@ -46,9 +46,9 @@ function HomePage() {
         ];
         updatedData.timein = null; // Reset timein
         updatedData.timeout = null; // Reset timeout
-        await sendSMS(user.phone, `Hello ${user.name}, You have timed out at ${new Date(currentTime).toLocaleTimeString()}. Thank you for using our service!`);
+        await sendSMS(user.phone, `Hello ${user.name}, this is kim minjeong. i am here to inform you that you have timed out at ${new Date(currentTime).toLocaleTimeString()}. one look give em whiplashhh~`);
       } else {
-        await sendSMS(user.phone, `Hello ${user.name}, You have timed in at ${new Date(currentTime).toLocaleTimeString()}. Welcome back!`);
+        await sendSMS(user.phone, `Hello ${user.name}, this is yu jimin. i am here to inform you that you have timed in at ${new Date(currentTime).toLocaleTimeString()}. imma get it done(armageddon) aw wayo wayo~`);
         updatedData.timein = currentTime; // Set timein
       }
 
