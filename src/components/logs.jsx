@@ -103,7 +103,7 @@ function UsersPage() {
                         </td>
                         <td>{user.lastAction ? new Date(user.lastAction).toLocaleString() : 'Never'}</td>
                         <td>
-                          <button className="view-btn" onClick={() => handleDelete(user.id)}>View Logs</button>
+                          <button className="view-btn" onClick={() => setSelectedUserLogs(user.logs || [])}>View Logs</button>
                           <button className="delete-btn" onClick={() => handleDelete(user.id)}>Delete</button>
                         </td>
                       </tr>
