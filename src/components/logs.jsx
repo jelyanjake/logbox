@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { LogsModal } from './LogsModal';
 import './logs.css';
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUserLogs, setSelectedUserLogs] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -101,13 +103,8 @@ function UsersPage() {
                         </td>
                         <td>{user.lastAction ? new Date(user.lastAction).toLocaleString() : 'Never'}</td>
                         <td>
-                          <button className="view-btn">View Logs</button>
-                          <button 
-                            className="delete-btn"
-                            onClick={() => handleDelete(user.id)}
-                          >
-                            Delete
-                          </button>
+                          <button className="view-btn" onClick={() => handleDelete(user.id)}>View Logs</button>
+                          <button className="delete-btn" onClick={() => handleDelete(user.id)}>Delete</button>
                         </td>
                       </tr>
                     ))}
@@ -118,6 +115,12 @@ function UsersPage() {
           </div>
         </div>
       </div>
+      {selectedUserLogs !== null && (
+        <LogsModal 
+          logs={selectedUserLogs} 
+          onClose={() => setSelectedUserLogs(null)} 
+        />
+      )}
     </section>
   );
 }
