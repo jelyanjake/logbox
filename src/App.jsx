@@ -1,13 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import MenuPopup from './components/menupopup';
 import HomePage from './components/home';
 import RegPage from './components/reg';
 import UsersPage from './components/logs';
-
 
 function App() {
   
