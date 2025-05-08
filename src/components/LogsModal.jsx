@@ -1,4 +1,3 @@
-// components/LogsModal.jsx
 import './LogsModal.css';
 
 export const LogsModal = ({ logs, onClose }) => {
