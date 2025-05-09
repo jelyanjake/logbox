@@ -63,15 +63,15 @@ function App() {
               </motion.div>
             } />
             <Route path="/users" element={
-              <motion.div
+              /*<motion.div
                 initial="initial"
                 animate="in"
                 exit="out"
                 variants={pageVariants}
                 transition={pageTransition}
-              >
+              >*/
                 <UsersPage />
-              </motion.div>
+              /*</motion.div>*/
             } />
           </Routes>
         </AnimatePresence>

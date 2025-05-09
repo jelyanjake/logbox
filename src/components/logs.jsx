@@ -1,28 +1,32 @@
 import { useState, useEffect } from 'react';
 import { LogsModal } from './LogsModal';
 import './logs.css';
+import { PasswordModal } from './passwordmodal';
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUserLogs, setSelectedUserLogs] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users');
-        const data = await response.json();
-        setUsers(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+    // Fetch users only after authentication
+    if (isAuthenticated) {
+      const fetchUsers = async () => {
+        try {
+          const response = await fetch('https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users');
+          const data = await response.json();
+          setUsers(data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+          setLoading(false);
+        }
+      };
+      fetchUsers();
+    }
+  }, [isAuthenticated]);
 
   const filteredUsers = users.filter(user => 
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -44,6 +48,14 @@ function UsersPage() {
       }
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <PasswordModal 
+        onSuccess={() => setIsAuthenticated(true)}
+      />
+    );
+  }
 
   return (
     <section id="users">
