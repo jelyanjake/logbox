@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { LogsModal } from './LogsModal';
 import './logs.css';
-import { PasswordModal } from './passwordmodal';
+import { PasswordModal } from './PasswordModal';
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
