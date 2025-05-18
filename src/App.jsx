@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import './App.css';
 import MenuPopup from './components/menupopup';
 import HomePage from './components/home';
@@ -10,6 +11,26 @@ import UsersPage from './components/logs';
 function App() {
   
   const location = useLocation();
+  const [users, setUsers] = useState([]);
+
+useEffect(() => {
+  fetch("/api/connection")
+    .then(async (res) => {
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`API error: ${res.status} ${text}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setUsers(data);
+      console.log("Fetched users:", data);
+    })
+    .catch((err) => {
+      console.error("Fetch failed:", err.message);
+    });
+}, []);
+
 
   const pageVariants = {
     initial: { y: 30, opacity: 0 },
