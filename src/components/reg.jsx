@@ -26,6 +26,11 @@ function RegPage() {
       const checkResponse = await fetch(
         `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?phone=${formData.phone}`
       );
+
+      if (!checkResponse.ok) {
+        console.error('Success: No Dupes found');
+      }
+
       const phoneUsers = await checkResponse.json();
       
       if (Array.isArray(phoneUsers)) {
