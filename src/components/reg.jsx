@@ -16,35 +16,53 @@ function RegPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setStatus('loading');
-  setStatusMessage('Validating...');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    setStatusMessage('Validating...');
 
-  try {
-    // Submit to API
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: formData.name,
-        phone: formData.phone,
-        idnum: formData.idnum
-      }),
-    });
+    try {
+      // Check for duplicates
+      const checkResponse = await fetch(
+        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?phone=${formData.phone}`
+      );
+      const phoneUsers = await checkResponse.json();
+      
+      if (Array.isArray(phoneUsers)) {
+        if (phoneUsers.some(user => user.phone === formData.phone)) {
+          throw new Error('Phone number is already registered');
+        }
+      }
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || 'Registration failed');
+      const idCheck = await fetch(
+        `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?idnum=${formData.idnum}`
+      );
+      const idUsers = await idCheck.json();
+      
+      if (Array.isArray(idUsers)) {
+        if (idUsers.some(user => user.idnum === formData.idnum)) {
+          throw new Error('School ID is already registered');
+        }
+      }
 
-    setStatus('success');
-    setStatusMessage('Registration successful!');
-    setFormData({ name: '', phone: '', idnum: '' });
+      // Submit if no duplicates
+      const response = await fetch('https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
 
-  } catch (err) {
-    setStatus('error');
-    setStatusMessage(err.message);
-  }
-};
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || 'Registration failed');
+      
+      setStatus('success');
+      setStatusMessage('Registration successful!');
+      setFormData({ name: '', phone: '', idnum: '' });
+    } catch (err) {
+      setStatus('error');
+      setStatusMessage(err.message);
+    }
+  };
 
   return (
     <section id="features">
