@@ -51,10 +51,10 @@ function HomePage() {
         updatedData.timein = null; // Reset timein
         updatedData.timeout = null; // Reset timeout
         //await sendSMS(user.phone, `Hello ${user.name}, this is kim minjeong. i am here to inform you that you have timed out at ${new Date(currentTime).toLocaleTimeString()}. one look give em whiplashhh~`);
-        //await sendSMS(user.phone, `Hello ${user.name}, You have timed out at ${new Date(currentTime).toLocaleTimeString()}. Thank you and have a great day!`);
+        await sendSMS(user.phone, `Hello ${user.name}, You have timed out at ${new Date(currentTime).toLocaleTimeString()}. Thank you and have a great day!`);
       } else {
         //await sendSMS(user.phone, `Hello ${user.name}, this is yu jimin. i am here to inform you that you have timed in at ${new Date(currentTime).toLocaleTimeString()}. imma get it done(armageddon) aw wayo wayo~`);
-        //await sendSMS(user.phone, `Hello ${user.name}, Welcome to University of Cebu! You have timed in at ${new Date(currentTime).toLocaleTimeString()}.`);
+        await sendSMS(user.phone, `Hello ${user.name}, Welcome to University of Cebu! You have timed in at ${new Date(currentTime).toLocaleTimeString()}.`);
         updatedData.timein = currentTime; // Set timein
       }
 
