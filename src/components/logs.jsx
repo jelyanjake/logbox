@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { LogsModal } from './LogsModal';
 import './logs.css';
 import { PasswordModal } from './PasswordModal';
+import { EditModal } from './EditModal';
+import StatusModal from './StatusModal';
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -9,6 +11,9 @@ function UsersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUserLogs, setSelectedUserLogs] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [statusMessage, setStatusMessage] = useState('');
 
   useEffect(() => {
     // Fetch users only after authentication
@@ -38,16 +43,55 @@ function UsersPage() {
 
   const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
+      setStatus('loading');
+      setStatusMessage('Deleting user...');
       try {
         await fetch(`https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users/${userId}`, {
           method: 'DELETE'
         });
         setUsers(users.filter(user => user.id !== userId));
+        setStatus('success');
+        setStatusMessage('User deleted successfully');
       } catch (error) {
         console.error('Error deleting user:', error);
+        setStatus('error');
+        setStatusMessage('Failed to delete user');
       }
     }
+    setTimeout(() => {
+      setStatus(null);
+    }, 2000);
   };
+
+  const handleSaveUser = async (userId, updatedData) => {
+    setEditingUser(null);
+    setStatus('loading');
+    setStatusMessage('Updating user...');
+  try {
+    const response = await fetch(
+      `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users/${userId}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      }
+    );
+    
+    if (!response.ok) throw new Error('Failed to update user');
+    
+    setUsers(users.map(user => 
+      user.id === userId ? { ...user, ...updatedData } : user
+    ))
+    setStatus('success');
+    setStatusMessage('User updated successfully');
+  } catch (error) {
+    setStatus('error');
+    setStatusMessage('Failed to update user');
+  }
+  setTimeout(() => {
+    setStatus(null);
+  }, 2000);
+};
 
   if (!isAuthenticated) {
     return (
@@ -116,6 +160,7 @@ function UsersPage() {
                         <td>{user.lastAction ? new Date(user.lastAction).toLocaleString() : 'Never'}</td>
                         <td>
                           <button className="view-btn" onClick={() => setSelectedUserLogs(user.logs || [])}>View Logs</button>
+                          <button className="view-btn" onClick={() => setEditingUser(user)}>Edit User</button>
                           <button className="delete-btn" onClick={() => handleDelete(user.id)}>Delete</button>
                         </td>
                       </tr>
@@ -133,6 +178,18 @@ function UsersPage() {
           onClose={() => setSelectedUserLogs(null)} 
         />
       )}
+      {editingUser && (
+  <EditModal
+    user={editingUser}
+    onClose={() => setEditingUser(null)}
+    onSave={handleSaveUser}
+  />
+)}
+<StatusModal
+        status={status}
+        message={statusMessage}
+        onClose={() => setStatus(null)}
+      />
     </section>
   );
 }

@@ -32,6 +32,7 @@ export const PasswordModal = ({ onSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter admin password"
             required
+            autoFocus
           />
           {error && <p className="error">{error}</p>}
           <button type="submit">Submit</button>

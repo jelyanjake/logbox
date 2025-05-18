@@ -27,10 +27,6 @@ function RegPage() {
         `https://67f50ba7913986b16fa2f9ff.mockapi.io/api/v1/users?phone=${formData.phone}`
       );
 
-      if (!checkResponse.ok) {
-        console.error('Success: No Dupes found');
-      }
-
       const phoneUsers = await checkResponse.json();
       
       if (Array.isArray(phoneUsers)) {
@@ -62,11 +58,14 @@ function RegPage() {
       
       setStatus('success');
       setStatusMessage('Registration successful!');
-      setFormData({ name: '', phone: '', idnum: '' });
+      setFormData({ name: '', phone: '', idnum: '' , avatar: '' });
     } catch (err) {
       setStatus('error');
       setStatusMessage(err.message);
     }
+    setTimeout(() => {
+      setStatus(null);
+    }, 3000);
   };
 
   return (
@@ -109,6 +108,20 @@ function RegPage() {
                 autoComplete='off'
                 value={formData.idnum}
                 onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="avatar">Image:</label>
+              <input
+                type="text"
+                id="avatar"
+                name="avatar"
+                autoComplete='off'
+                value={formData.avatar}
+                onChange={handleChange}
+                placeholder="URL: https://example.com/image.jpg"
                 required
               />
             </div>

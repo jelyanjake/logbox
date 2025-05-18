@@ -79,3 +79,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.user-image {
+  border-radius: 11px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}

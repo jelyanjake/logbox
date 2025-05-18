@@ -3,7 +3,7 @@ import './StatusModal.css';
 import successIcon from '../assets/like.gif';
 import errorIcon from '../assets/warning.gif';
 
-const StatusModal = ({ status, message }) => {
+const NewModal = ({ status, message, userImage }) => {
   return (
     <AnimatePresence>
       {status && (
@@ -25,15 +25,6 @@ const StatusModal = ({ status, message }) => {
             >
               <div className="status-content">
                 {/* Show GIF only for success/error states */}
-                {status === 'success' && (
-                  <motion.img 
-                    src={successIcon}
-                    alt="Success"
-                    className="status-gif"
-                    initial={{ scale: 0.8 }}
-                    animate={{ scale: 1 }}
-                  />
-                )}
                 {status === 'error' && (
                   <motion.img 
                     src={errorIcon}
@@ -54,14 +45,37 @@ const StatusModal = ({ status, message }) => {
                     />
                   </div>
                 )}
+                  
+                  {status === 'success' && (
+                    <motion.p
+                    initial={{ opacity: 0.4 }}
+                    animate={{ opacity: 1 }}
+                    >
+                      <img src={userImage} alt="User" className="user-image" />
+                      {message}
+                    </motion.p>
+                  )}
 
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.15 }}
-                >
-                  {message}
-                </motion.p>
+                  {status === 'error' && (
+                    <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.15 }}
+                    >
+                        {message}
+                    </motion.p>
+                  )}
+
+                  {status === 'loading' && (
+                    <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.15 }}
+                    >
+                        {message}
+                    </motion.p>
+                  )}
+
               </div>
             </motion.div>
           </div>
@@ -71,4 +85,4 @@ const StatusModal = ({ status, message }) => {
   );
 };
 
-export default StatusModal;
+export default NewModal;

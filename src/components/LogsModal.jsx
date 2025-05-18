@@ -1,9 +1,20 @@
 import './LogsModal.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const LogsModal = ({ logs, onClose }) => {
   return (
-    <div className="logs-modal-overlay" onClick={onClose}>
-      <div className="logs-modal-content" onClick={(e) => e.stopPropagation()}>
+    <AnimatePresence>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ type: "spring", damping: 25, stiffness: 500 }}
+    className="logs-modal-overlay" onClick={onClose}>
+      <motion.div initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ type: "spring", damping: 25, stiffness: 500 }}
+      className="logs-modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>×</button>
         <h3>Time Logs</h3>
         {logs.length === 0 ? (
@@ -36,7 +47,8 @@ export const LogsModal = ({ logs, onClose }) => {
             </tbody>
           </table>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+    </AnimatePresence>
   );
 };
