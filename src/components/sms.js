@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.textbee.dev/api/v1';
-const API_KEY = process.env.TEXTBEE_API_KEY;
-const DEVICE_ID = process.env.TEXTBEE_DEVICE_ID;
+const API_KEY = '0389b2d2-8b99-4be4-b4fd-440c554d4a22';
+const DEVICE_ID = '680e336f60ed7610f718cfc6';
 
 export const sendSMS = async (recipient, message) => {
   try {
